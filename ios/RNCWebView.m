@@ -271,19 +271,28 @@ static NSURLCredential* clientAuthenticationCredential;
     [super removeFromSuperview];
 }
 
+// FIX iOS status bar
 -(void)toggleFullScreenVideoStatusBars
 {
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
   if (!_isFullScreenVideoOpen) {
     _isFullScreenVideoOpen = YES;
-    RCTUnsafeExecuteOnMainQueueSync(^{
-      [RCTSharedApplication() setStatusBarStyle:UIStatusBarStyleLightContent animated:YES];
+//     RCTUnsafeExecuteOnMainQueueSync(^{
+//       [RCTSharedApplication() setStatusBarStyle:UIStatusBarStyleLightContent animated:YES];
+//     });
+ RCTUnsafeExecuteOnMainQueueSync(^{
+      [RCTSharedApplication() setStatusBarHidden:NO animated:YES];
+      [RCTSharedApplication() setStatusBarStyle:RCTSharedApplication().statusBarStyle animated:YES];
     });
   } else {
     _isFullScreenVideoOpen = NO;
-    RCTUnsafeExecuteOnMainQueueSync(^{
-      [RCTSharedApplication() setStatusBarHidden:_savedStatusBarHidden animated:YES];
-      [RCTSharedApplication() setStatusBarStyle:_savedStatusBarStyle animated:YES];
+//     RCTUnsafeExecuteOnMainQueueSync(^{
+//       [RCTSharedApplication() setStatusBarHidden:_savedStatusBarHidden animated:YES];
+//       [RCTSharedApplication() setStatusBarStyle:_savedStatusBarStyle animated:YES];
+//     });
+ RCTUnsafeExecuteOnMainQueueSync(^{
+      [RCTSharedApplication() setStatusBarHidden:NO animated:YES];
+      [RCTSharedApplication() setStatusBarStyle:RCTSharedApplication().statusBarStyle animated:YES];
     });
   }
 #pragma clang diagnostic pop
